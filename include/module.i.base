@@ -1,0 +1,40 @@
+%module valkka_nv
+%include <std_string.i>
+
+// this has the effect of initializing numpy with call to "import_array()"
+%pythoncode %{  from valkka import core %}
+
+%{ // this is prepended in the wapper-generated c(pp) file
+#define SWIG_FILE_WITH_INIT
+
+#include "framefilter.h"
+#include "thread.h"
+#include "framefifo.h"
+#include "decoderthread.h"
+#include "nvthread.h"
+
+// https://docs.scipy.org/doc/numpy/reference/c-api.array.html#importing-the-api
+// https://github.com/numpy/numpy/issues/9309#issuecomment-311320497
+#define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
+#include "numpy/ndarraytypes.h"
+#include "numpy/arrayobject.h"
+
+%}
+
+%init %{
+    // WARNING: numpy initialization is done from libValkka
+%}
+
+// Swig should not try to create a default constructor for the following classes as they're abstract (swig interface file should not have the constructors either):
+%nodefaultctor FrameFilter;
+%nodefaultctor Thread;
+
+%typemap(in) (std::size_t) {
+  $1=PyLong_AsSize_t($input);
+}
+
+%inline %{  
+%}
+
+// next, expose what is necessary
+// autogenerate from this point on

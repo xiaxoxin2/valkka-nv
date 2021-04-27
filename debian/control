@@ -1,0 +1,13 @@
+Source: valkka
+Section: libs
+Priority: optional
+Maintainer: Sampsa Riikonen <sampsa.riikonen@iki.fi>
+Build-Depends: build-essential, libc6-dev, yasm, cmake, pkg-config, swig, libglew-dev, mesa-common-dev, libstdc++-5-dev, python3-dev, python3-numpy, libasound2-dev
+Standards-Version: 3.9.7
+Homepage: http://www.iki.fi/sampsa.riikonen
+
+Package: valkka_example_module
+Architecture: any
+Depends: valkka(>=0.6.0)
+Description: An extension module for Valkka
+ OpenSource Video Management for Linux
